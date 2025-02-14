@@ -55,15 +55,6 @@ namespace Lezione9.Dev.Controllers
 
             WarehouseDTO dto = _mapper.MapEntityToDTO(result);
 
-            dto.Products = result.Allocations?.ConvertAll(a => new ProductDTO
-            {
-                Id = a.Product.Id,
-                Name = a.Product.Name,
-                Quantity = a.Quantity
-            });
-
-            dto.Quantity = dto.Products?.Sum(p => p.Quantity);
-
             return Ok(dto);
         }
 

@@ -30,12 +30,16 @@ namespace Lezione9.Dev.Controllers
         [Route("{id}")]
         public IActionResult GetSingle(int id)
         {
-            var result = _ctx.Products.SingleOrDefault(w => w.Id == id);
+            var result = _ctx.Products.Include(p => p.Allocations)
+                .ThenInclude(a => a.Warehouse).SingleOrDefault(w => w.Id == id);
             if (result == null)
             {
                 return BadRequest();
             }
-            return Ok(_mapper.MapEntityToDTO(result));
+
+            var dto = _mapper.MapEntityToDTO(result);
+
+            return Ok(dto);
         }
 
         [HttpPost]

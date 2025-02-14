@@ -9,7 +9,9 @@ namespace Lezione9.Dev.Dto
             return new ProductDTO
             {
                 Id = entity.Id,
-                Name = entity.Name
+                Name = entity.Name,
+                Quantity = entity.Allocations?.Sum(a => a.Quantity) ?? 0,
+                Warehouses = entity.Allocations?.ConvertAll(MapAllocationToWarehouseDTO)
             };
         }
 
@@ -36,7 +38,27 @@ namespace Lezione9.Dev.Dto
             return new WarehouseDTO
             {
                 Id = entity.Id,
-                Title = entity.Title
+                Title = entity.Title,
+                Products = entity.Allocations?.ConvertAll(MapAllocationToProductDTO)
+            };
+        }
+
+        public ProductDTO MapAllocationToProductDTO(Allocation entity)
+        {
+            return new ProductDTO() {
+                Id = entity.ProductId,
+                Name = entity.Product?.Name ?? "Not provided",
+                Quantity = entity.Quantity
+            };
+        }
+
+        public WarehouseDTO MapAllocationToWarehouseDTO(Allocation entity)
+        {
+            return new WarehouseDTO()
+            {
+                Id = entity.WarehouseId,
+                Title = entity.Warehouse?.Title ?? "Not provided",
+                Quantity = entity.Quantity
             };
         }
     }
