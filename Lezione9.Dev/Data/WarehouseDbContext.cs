@@ -11,5 +11,6 @@ namespace Lezione9.Dev.Data
 
         public DbSet<Warehouse> Warehouses { get; set; }
         public DbSet<Product> Products { get; set; }
+        public DbSet<Allocation> Allocations { get; set; }
     }
 }

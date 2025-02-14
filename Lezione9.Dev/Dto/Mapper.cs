@@ -9,9 +9,7 @@ namespace Lezione9.Dev.Dto
             return new ProductDTO
             {
                 Id = entity.Id,
-                Name = entity.Name,
-                WarehouseId = entity.WarehouseId,
-                WarehouseTitle = entity.Warehouse?.Title
+                Name = entity.Name
             };
         }
 
@@ -20,8 +18,7 @@ namespace Lezione9.Dev.Dto
             return new Product
             {
                 Id = dto.Id,
-                Name = dto.Name,
-                WarehouseId = dto.WarehouseId
+                Name = dto.Name
             };
         }
 
@@ -39,8 +36,7 @@ namespace Lezione9.Dev.Dto
             return new WarehouseDTO
             {
                 Id = entity.Id,
-                Title = entity.Title,
-                Products = entity.Products?.ConvertAll(MapEntityToDTO)
+                Title = entity.Title
             };
         }
     }

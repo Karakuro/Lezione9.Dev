@@ -6,8 +6,6 @@ namespace Lezione9.Dev.Data
     {
         public int Id { get; set; }
         public required string Name { get; set; }
-        public int WarehouseId { get; set; }
-        [ForeignKey("WarehouseId")]
-        public Warehouse? Warehouse { get; set; }
+        public List<Allocation>? Allocations { get; set; }
     }
 }

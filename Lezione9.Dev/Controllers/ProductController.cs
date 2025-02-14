@@ -30,7 +30,7 @@ namespace Lezione9.Dev.Controllers
         [Route("{id}")]
         public IActionResult GetSingle(int id)
         {
-            var result = _ctx.Products.Include(w => w.Warehouse).SingleOrDefault(w => w.Id == id);
+            var result = _ctx.Products.SingleOrDefault(w => w.Id == id);
             if (result == null)
             {
                 return BadRequest();

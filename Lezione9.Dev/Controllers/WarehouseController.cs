@@ -43,12 +43,28 @@ namespace Lezione9.Dev.Controllers
         [Route("{id}/Products")]
         public IActionResult GetWithProducts(int id)
         {
-            var result = _ctx.Warehouses.Include(w => w.Products).SingleOrDefault(w => w.Id == id);
+            //Metodologia per recuperare i dati in base alle relazioni presenti, per popolare
+            //la lista di allocazioni in un magazzino e le relative informazioni sui prodotti
+            var result = _ctx.Warehouses.Include(w => w.Allocations)
+                .ThenInclude(a => a.Product).SingleOrDefault(w => w.Id == id);
+
             if (result == null)
             {
                 return BadRequest();
             }
-            return Ok(_mapper.MapEntityToDTO(result));
+
+            WarehouseDTO dto = _mapper.MapEntityToDTO(result);
+
+            dto.Products = result.Allocations?.ConvertAll(a => new ProductDTO
+            {
+                Id = a.Product.Id,
+                Name = a.Product.Name,
+                Quantity = a.Quantity
+            });
+
+            dto.Quantity = dto.Products?.Sum(p => p.Quantity);
+
+            return Ok(dto);
         }
 
         [HttpPost]
